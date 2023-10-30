@@ -1,10 +1,13 @@
+import { router } from "expo-router";
 import React, { useState } from "react";
+import ErrorMsg from "../utils/errorBox";
+import BackBtn from "../utils/backBtn";
+import HeaderBlue from "../utils/HeaderBlue";
+
 import {
-  ScrollView,
   StyleSheet,
   Text,
   TouchableOpacity,
-  Image,
   View,
   TextInput,
   Dimensions,
@@ -12,20 +15,24 @@ import {
 const deviceWidth = Dimensions.get("screen").width;
 
 const RegisterScreen = () => {
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [shopName, setShopName] = useState("");
+  const [shopAddress, setShopAddress] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+
+  const confirmPass = (pass: any) => {
+    if (pass !== password) setErrorMsg("Passwords mismatch!");
+    else setErrorMsg("");
+  };
   return (
-    <View style={{ backgroundColor: "#F3F9FB",alignItems:'center' }}>
-      <View
-        style={{
-          backgroundColor: "#4796BD",
-          flexDirection: "row",
-          alignItems: "center",
-        }}
-      >
-        <Text style={styles.mainHeading}>Register</Text>
-      </View>
+    <View style={{ alignItems: "center" }}>
+      <HeaderBlue />
       <View>
-        <View>
+        <View style={{ width: 380 }}>
           <Text style={styles.heading}>Register</Text>
+          {errorMsg ? <ErrorMsg errorText={errorMsg} /> : null}
           <Text
             style={{
               alignSelf: "flex-start",
@@ -38,58 +45,48 @@ const RegisterScreen = () => {
           >
             Account
           </Text>
+          <TextInput
+            style={styles.inputArea}
+            blurOnSubmit={true}
+            onChangeText={(value) => {
+              setFullName(value);
+            }}
+            placeholder="Full Name"
+            keyboardType="default"
+          />
 
-          <View style={styles.inputBox}>
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              // onChangeText={value => {
-              //   setUserEmail(value);
-              // }}
-              placeholder="Full Name"
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
-          <View style={styles.inputBox}>
-            <Text style={styles.label}>Email-id</Text>
+          <TextInput
+            style={styles.inputArea}
+            blurOnSubmit={true}
+            onChangeText={(value) => {
+              setEmail(value);
+            }}
+            placeholder="Email"
+            keyboardType="email-address"
+            autoCapitalize="none"
+          />
 
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              // onChangeText={value => {
-              //   setUserEmail(value);
-              // }}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
+          <TextInput
+            style={styles.inputArea}
+            blurOnSubmit={true}
+            onChangeText={(value) => {
+              setPassword(value);
+            }}
+            placeholder="Password"
+            secureTextEntry
+          />
 
-          <View style={styles.inputBox}>
-            <Text style={styles.label}>Password</Text>
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              // onChangeText={value => {
-              //   setUserPassword(value);
-              // }}
-              // name="password"
-              secureTextEntry
-            />
-          </View>
-          <View style={styles.inputBox}>
-            <Text style={styles.label}>Confirm Password</Text>
-
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              // onChangeText={value => {
-              //   setUserEmail(value);
-              // }}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
+          <TextInput
+            style={styles.inputArea}
+            blurOnSubmit={true}
+            onChangeText={(value) => {
+              confirmPass(value);
+            }}
+            placeholder="Confirm Password"
+            keyboardType="default"
+            autoCapitalize="none"
+            secureTextEntry
+          />
           <Text
             style={{
               alignSelf: "flex-start",
@@ -102,37 +99,32 @@ const RegisterScreen = () => {
           >
             Shop Details
           </Text>
-          <View style={styles.inputBox}>
-            <Text style={styles.label}>Name</Text>
 
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              // onChangeText={value => {
-              //   setUserEmail(value);
-              // }}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
+          <TextInput
+            style={styles.inputArea}
+            blurOnSubmit={true}
+            onChangeText={(value) => {
+              setShopName(value);
+            }}
+            placeholder="Shop Name"
+            keyboardType="default"
+            autoCapitalize="none"
+          />
 
-          <View style={styles.inputBox}>
-            <Text style={styles.label}>Address</Text>
-
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              // onChangeText={value => {
-              //   setUserEmail(value);
-              // }}
-              keyboardType="email-address"
-              autoCapitalize="none"
-            />
-          </View>
+          <TextInput
+            style={styles.inputArea}
+            blurOnSubmit={true}
+            onChangeText={(value) => {
+              setShopAddress(value);
+            }}
+            placeholder="Address"
+            keyboardType="default"
+            autoCapitalize="none"
+          />
           <TouchableOpacity
             style={styles.loginButton}
             onPress={() => {
-              // navigation.navigate('LoginScreen');
+              router.replace("/");
             }}
           >
             <Text style={styles.buttonText}>Register</Text>
@@ -146,20 +138,14 @@ const RegisterScreen = () => {
 export default RegisterScreen;
 
 const styles = StyleSheet.create({
-  newUser: {
-    fontSize: 18,
-    color: "#9ca2ad",
-
-    marginTop: 25,
-    marginBottom: 10,
-  },
   loginButton: {
     width: 280,
     height: 40,
     backgroundColor: "#4796BD",
     borderRadius: 20,
+    alignSelf: "center",
     justifyContent: "center",
-    marginTop: 25,
+    marginVertical: 16,
   },
   buttonText: {
     color: "#fff",
@@ -173,17 +159,10 @@ const styles = StyleSheet.create({
     color: "#122E40",
     fontWeight: "bold",
     marginTop: 25,
+    textAlign: "center",
   },
-  
-  mainHeading: {
-    fontSize: 26,
-    color: "#fff",
-    textAlign:'center',
-    marginVertical: 15,
-    width: deviceWidth
-  },
-
-  inputBox: {
+  inputArea: {
+    paddingLeft: 20,
     backgroundColor: "#E0E0E0",
     borderRadius: 10,
     marginRight: 28,
@@ -191,16 +170,5 @@ const styles = StyleSheet.create({
     textAlign: "left",
     marginVertical: 10,
     height: 55,
-  },
-
-  label: {
-    paddingLeft: 10,
-    alignItems: "center",
-    justifyContent: "center",
-    fontSize: 15,
-    color: "#828282",
-  },
-  inputArea: {
-    paddingLeft: 20,
   },
 });
