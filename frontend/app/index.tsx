@@ -61,8 +61,8 @@ const LoginScreen = () => {
               secureTextEntry
             />
             <TouchableOpacity
-              onPress={() => console.log(password, email)}
               style={styles.loginButton}
+              onPress={() => router.push("/drawer/Feed")}
             >
               <Text style={styles.buttonText}>Login</Text>
             </TouchableOpacity>

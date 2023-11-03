@@ -7,9 +7,7 @@ export default function HomeLayout() {
     <>
       <View style={styles.container}>
         <StatusBar hidden={true}></StatusBar>
-        <ScrollView>
-          <Slot />
-        </ScrollView>
+        <Slot />
       </View>
     </>
   );

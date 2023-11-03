@@ -1,8 +1,7 @@
 import { router } from "expo-router";
 import React, { useState } from "react";
-import ErrorMsg from "../utils/errorBox";
-import BackBtn from "../utils/backBtn";
-import HeaderBlue from "../utils/HeaderBlue";
+// import ErrorMsg from "../utils/errorBox";
+import ImagePicker from "../../../utils/ImagePicker";
 
 import {
   StyleSheet,
@@ -16,44 +15,31 @@ import {
 const deviceWidth = Dimensions.get("screen").width;
 
 const RegisterScreen = () => {
-  const [fullName, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [shopName, setShopName] = useState("");
-  const [shopAddress, setShopAddress] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [address, setAddress] = useState("");
+
+  const [productName, setProductName] = useState("");
+  const [productPrice, setProductPrice] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(0);
+
   const [errorMsg, setErrorMsg] = useState("");
 
-  const confirmPass = (pass: any) => {
-    if (pass !== password) setErrorMsg("Passwords mismatch!");
-    else setErrorMsg("");
-  };
   return (
     <ScrollView>
       <View style={{ alignItems: "center" }}>
-        <HeaderBlue />
         <View>
           <View style={{ width: 380 }}>
-            <Text style={styles.heading}>Register</Text>
-            {errorMsg ? <ErrorMsg errorText={errorMsg} /> : null}
-            <Text
-              style={{
-                alignSelf: "flex-start",
-                fontSize: 25,
-                color: "#122E40",
-                marginLeft: 28,
-                marginTop: 25,
-                marginBottom: 10,
-              }}
-            >
-              Account
-            </Text>
+            <Text style={styles.heading}>Buy Items</Text>
+            {/* {errorMsg ? <ErrorMsg errorText={errorMsg} /> : null} */}
+            <View style={styles.headingLine}></View>
             <TextInput
               style={styles.inputArea}
               blurOnSubmit={true}
               onChangeText={(value) => {
-                setFullName(value);
+                setCustomerName(value);
               }}
-              placeholder="Full Name"
+              placeholder="Customer Name"
               keyboardType="default"
             />
 
@@ -61,75 +47,83 @@ const RegisterScreen = () => {
               style={styles.inputArea}
               blurOnSubmit={true}
               onChangeText={(value) => {
-                setEmail(value);
+                setPhoneNumber(value);
               }}
-              placeholder="Email"
-              keyboardType="email-address"
+              placeholder="Phone Number"
+              keyboardType="numeric"
               autoCapitalize="none"
             />
-
             <TextInput
               style={styles.inputArea}
               blurOnSubmit={true}
               onChangeText={(value) => {
-                setPassword(value);
-              }}
-              placeholder="Password"
-              secureTextEntry
-            />
-
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              onChangeText={(value) => {
-                confirmPass(value);
-              }}
-              placeholder="Confirm Password"
-              keyboardType="default"
-              autoCapitalize="none"
-              secureTextEntry
-            />
-            <Text
-              style={{
-                alignSelf: "flex-start",
-                fontSize: 25,
-                color: "#122E40",
-                marginLeft: 28,
-                marginTop: 25,
-                marginBottom: 10,
-              }}
-            >
-              Shop Details
-            </Text>
-
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              onChangeText={(value) => {
-                setShopName(value);
-              }}
-              placeholder="Shop Name"
-              keyboardType="default"
-              autoCapitalize="none"
-            />
-
-            <TextInput
-              style={styles.inputArea}
-              blurOnSubmit={true}
-              onChangeText={(value) => {
-                setShopAddress(value);
+                setAddress(value);
               }}
               placeholder="Address"
               keyboardType="default"
               autoCapitalize="none"
             />
+
+            <View style={styles.headingLine}></View>
+            <Text
+              style={{
+                alignSelf: "flex-start",
+                fontSize: 26,
+                color: "#122E40",
+                marginLeft: 28,
+                marginBottom: 10,
+              }}
+            >
+              Product
+            </Text>
+
+            <TextInput
+              style={styles.inputArea}
+              blurOnSubmit={true}
+              onChangeText={(value) => {
+                setProductName(value);
+              }}
+              placeholder="Product Name"
+              keyboardType="default"
+              autoCapitalize="none"
+            />
+
+            <TextInput
+              style={styles.inputArea}
+              blurOnSubmit={true}
+              onChangeText={(value) => {
+                setProductPrice(parseInt(value));
+              }}
+              placeholder="Price"
+              keyboardType="numeric"
+              autoCapitalize="none"
+            />
+            <TextInput
+              style={styles.inputArea}
+              blurOnSubmit={true}
+              onChangeText={(value) => {
+                setProductQuantity(parseInt(value));
+              }}
+              placeholder="No. of Items"
+              keyboardType="numeric"
+              autoCapitalize="none"
+            />
+            <ImagePicker />
+
             <TouchableOpacity
               style={styles.loginButton}
               onPress={() => {
-                router.replace("/");
+                console.log({
+                  customerName,
+                  phoneNumber,
+                  address,
+                  productName,
+                  productPrice,
+                  productQuantity,
+                });
               }}
             >
-              <Text style={styles.buttonText}>Register</Text>
+              <Text style={styles.buttonText}>Buy</Text>
             </TouchableOpacity>
           </View>
         </View>
@@ -149,6 +143,13 @@ const styles = StyleSheet.create({
     alignSelf: "center",
     justifyContent: "center",
     marginVertical: 16,
+  },
+  headingLine: {
+    width: "90%",
+    height: 1,
+    backgroundColor: "black",
+    alignSelf: "center",
+    marginVertical: 20,
   },
   buttonText: {
     color: "#fff",

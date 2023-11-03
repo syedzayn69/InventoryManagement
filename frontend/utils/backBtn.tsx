@@ -18,9 +18,9 @@ export default () => {
 const styles = StyleSheet.create({
   Btn: {
     paddingHorizontal: 20,
-    paddingVertical: 10,
+    paddingVertical: 5,
     backgroundColor: "#E0E0E0",
-    borderRadius: 5,
+    borderRadius: 50,
     marginHorizontal: 15,
   },
 });
